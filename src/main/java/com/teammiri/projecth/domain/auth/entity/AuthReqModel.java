@@ -1,4 +1,4 @@
-package com.teammiri.projecth.api.entity.auth;
+package com.teammiri.projecth.domain.auth.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

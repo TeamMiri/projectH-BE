@@ -1,7 +1,7 @@
 package com.teammiri.projecth.oauth.handler;
 
-import com.teammiri.projecth.api.entity.user.UserRefreshToken;
-import com.teammiri.projecth.api.repository.user.UserRefreshTokenRepository;
+import com.teammiri.projecth.domain.user.entity.UserRefreshToken;
+import com.teammiri.projecth.domain.user.repository.UserRefreshTokenRepository;
 import com.teammiri.projecth.config.properties.AppProperties;
 import com.teammiri.projecth.oauth.entity.ProviderType;
 import com.teammiri.projecth.oauth.entity.RoleType;

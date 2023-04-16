@@ -1,7 +1,7 @@
-package com.teammiri.projecth.api.controller.user;
+package com.teammiri.projecth.domain.user.controller;
 
-import com.teammiri.projecth.api.entity.user.User;
-import com.teammiri.projecth.api.service.UserService;
+import com.teammiri.projecth.domain.user.entity.User;
+import com.teammiri.projecth.domain.user.service.UserService;
 import com.teammiri.projecth.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

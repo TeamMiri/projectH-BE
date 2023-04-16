@@ -1,7 +1,7 @@
-package com.teammiri.projecth.api.service;
+package com.teammiri.projecth.domain.user.service;
 
-import com.teammiri.projecth.api.entity.user.User;
-import com.teammiri.projecth.api.repository.user.UserRepository;
+import com.teammiri.projecth.domain.user.entity.User;
+import com.teammiri.projecth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

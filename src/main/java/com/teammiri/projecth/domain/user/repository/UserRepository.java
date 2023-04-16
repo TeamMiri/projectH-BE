@@ -1,6 +1,6 @@
-package com.teammiri.projecth.api.repository.user;
+package com.teammiri.projecth.domain.user.repository;
 
-import com.teammiri.projecth.api.entity.user.User;
+import com.teammiri.projecth.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

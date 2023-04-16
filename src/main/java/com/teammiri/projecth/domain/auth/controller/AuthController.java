@@ -1,8 +1,8 @@
-package com.teammiri.projecth.api.controller.auth;
+package com.teammiri.projecth.domain.auth.controller;
 
-import com.teammiri.projecth.api.entity.auth.AuthReqModel;
-import com.teammiri.projecth.api.entity.user.UserRefreshToken;
-import com.teammiri.projecth.api.repository.user.UserRefreshTokenRepository;
+import com.teammiri.projecth.domain.auth.entity.AuthReqModel;
+import com.teammiri.projecth.domain.user.entity.UserRefreshToken;
+import com.teammiri.projecth.domain.user.repository.UserRefreshTokenRepository;
 import com.teammiri.projecth.common.ApiResponse;
 import com.teammiri.projecth.config.properties.AppProperties;
 import com.teammiri.projecth.oauth.entity.RoleType;

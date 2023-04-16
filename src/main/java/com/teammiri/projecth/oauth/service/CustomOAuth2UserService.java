@@ -1,7 +1,7 @@
 package com.teammiri.projecth.oauth.service;
 
-import com.teammiri.projecth.api.entity.user.User;
-import com.teammiri.projecth.api.repository.user.UserRepository;
+import com.teammiri.projecth.domain.user.entity.User;
+import com.teammiri.projecth.domain.user.repository.UserRepository;
 import com.teammiri.projecth.oauth.entity.ProviderType;
 import com.teammiri.projecth.oauth.entity.RoleType;
 import com.teammiri.projecth.oauth.entity.UserPrincipal;
@@ -78,8 +78,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     private User updateUser(User user, OAuth2UserInfo userInfo) {
-        if (userInfo.getName() != null && !user.getUsername().equals(userInfo.getName())) {
-            user.setUsername(userInfo.getName());
+        if (userInfo.getName() != null && !user.getName().equals(userInfo.getName())) {
+            user.setName(userInfo.getName());
         }
 
         if (userInfo.getImageUrl() != null && !user.getProfileImageUrl().equals(userInfo.getImageUrl())) {

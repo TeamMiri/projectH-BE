@@ -1,5 +1,6 @@
-package com.teammiri.projecth.api.entity.user;
+package com.teammiri.projecth.domain.user.entity;
 
+import com.teammiri.projecth.domain.project.entity.Project;
 import com.teammiri.projecth.oauth.entity.ProviderType;
 import com.teammiri.projecth.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,18 +8,23 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "USER")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @JsonIgnore
     @Id
@@ -31,10 +37,10 @@ public class User {
     @Size(max = 64)
     private String userId;
 
-    @Column(name = "USERNAME", length = 100)
+    @Column(name = "NAME", length = 100)
     @NotNull
     @Size(max = 100)
-    private String username;
+    private String name;
 
     @JsonIgnore
     @Column(name = "PASSWORD", length = 128)
@@ -52,10 +58,28 @@ public class User {
     @Size(min = 1, max = 1)
     private String emailVerifiedYn;
 
+    @Column(name = "AGE")
+    @Max(value = 150)
+    private Integer age;
+
+    @Column(name = "GENDER", length = 1)
+    @Size(max = 1)
+    private String gender;
+
+    // techSpec
+
     @Column(name = "PROFILE_IMAGE_URL", length = 512)
     @NotNull
     @Size(max = 512)
     private String profileImageUrl;
+
+    @Column(name = "CONTACT_NUMBER", length = 20)
+    @Size(max = 20)
+    private String contactNumber;
+
+    @Column(name = "INTRODUCTION", length = 1000)
+    @Size(max = 1000)
+    private String introduction;
 
     @Column(name = "PROVIDER_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
@@ -67,17 +91,16 @@ public class User {
     @NotNull
     private RoleType roleType;
 
-    @Column(name = "CREATED_AT")
-    @NotNull
+    @CreatedDate
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "MODIFIED_AT")
-    @NotNull
+    @LastModifiedDate
     private LocalDateTime modifiedAt;
 
     public User(
             @NotNull @Size(max = 64) String userId,
-            @NotNull @Size(max = 100) String username,
+            @NotNull @Size(max = 100) String name,
             @NotNull @Size(max = 512) String email,
             @NotNull @Size(max = 1) String emailVerifiedYn,
             @NotNull @Size(max = 512) String profileImageUrl,
@@ -87,7 +110,7 @@ public class User {
             @NotNull LocalDateTime modifiedAt
     ) {
         this.userId = userId;
-        this.username = username;
+        this.name = name;
         this.password = "NO_PASS";
         this.email = email != null ? email : "NO_EMAIL";
         this.emailVerifiedYn = emailVerifiedYn;
@@ -98,3 +121,5 @@ public class User {
         this.modifiedAt = modifiedAt;
     }
 }
+
+

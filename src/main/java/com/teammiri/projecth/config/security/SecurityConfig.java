@@ -1,6 +1,6 @@
 package com.teammiri.projecth.config.security;
 
-import com.teammiri.projecth.api.repository.user.UserRefreshTokenRepository;
+import com.teammiri.projecth.domain.user.repository.UserRefreshTokenRepository;
 import com.teammiri.projecth.config.properties.AppProperties;
 import com.teammiri.projecth.config.properties.CorsProperties;
 import com.teammiri.projecth.oauth.entity.RoleType;
