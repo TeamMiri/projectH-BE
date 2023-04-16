@@ -1,4 +1,4 @@
-package com.teammiri.projecth.api.entity.user;
+package com.teammiri.projecth.domain.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

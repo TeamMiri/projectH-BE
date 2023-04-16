@@ -1,7 +1,7 @@
 package com.teammiri.projecth.oauth.service;
 
-import com.teammiri.projecth.api.entity.user.User;
-import com.teammiri.projecth.api.repository.user.UserRepository;
+import com.teammiri.projecth.domain.user.entity.User;
+import com.teammiri.projecth.domain.user.repository.UserRepository;
 import com.teammiri.projecth.oauth.entity.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

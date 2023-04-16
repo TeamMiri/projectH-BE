@@ -1,6 +1,6 @@
 package com.teammiri.projecth.oauth.entity;
 
-import com.teammiri.projecth.api.entity.user.User;
+import com.teammiri.projecth.domain.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
