@@ -33,7 +33,7 @@ spring:
 
 # cors 설정
 cors:
-  allowed-origins: 'http://localhost:3000'
+  allowed-origins: 'http://localhost:3000,http://salahdin.iptime.org:8080'
   allowed-methods: GET,POST,PUT,DELETE,OPTIONS
   allowed-headers: '*'
   max-age: 3600
@@ -50,6 +50,7 @@ app:
   oauth2:
     authorizedRedirectUris:
       - http://localhost:3000/oauth/redirect
+      - http://salahdin.iptime.org:8080/oauth/redirect
       -
 ## logging
 logging:
