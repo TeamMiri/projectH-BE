@@ -60,12 +60,19 @@ public class Project {
     @Convert(converter = StringListConverter.class)
     private List<String> techSpec = new ArrayList<>();
 
+    @Column(name = "PROJECT_IMAGE_URL", length = 512)
+    @Size(max = 512)
+    private String projectImageUrl;
+
+    @Column(name = "PROPOSAL_URL", length = 512)
+    @Size(max = 512)
+    private String proposalUrl;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<UserProject> userProjectList = new ArrayList<>();
 
     @Column(name = "STATUS", length = 32)
     @NotNull
-    @Size(max = 32)
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
@@ -87,7 +94,9 @@ public class Project {
             @Size(max = 64) String location,
             List<String> techSpec,
             List<UserProject> userProjectList,
-            @NotNull @Size(max = 32) ProjectStatus status,
+            String projectImageUrl,
+            String proposalUrl,
+            @NotNull ProjectStatus status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt) {
         this.title = title;
@@ -99,6 +108,8 @@ public class Project {
         this.location = location;
         this.techSpec = techSpec;
         this.userProjectList = userProjectList;
+        this.projectImageUrl = projectImageUrl;
+        this.proposalUrl = proposalUrl;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
