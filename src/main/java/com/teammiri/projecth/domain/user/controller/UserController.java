@@ -7,7 +7,6 @@ import com.teammiri.projecth.domain.user.service.UserService;
 import com.teammiri.projecth.common.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
