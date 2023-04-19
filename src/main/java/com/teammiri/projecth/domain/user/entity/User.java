@@ -6,10 +6,7 @@ import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import com.teammiri.projecth.oauth.entity.ProviderType;
 import com.teammiri.projecth.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -24,6 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "USER_")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -78,6 +76,10 @@ public class User {
     @Size(max = 512)
     private String profileImageUrl;
 
+    @Column(name = "PORTFOLIO_URL", length = 512)
+    @Size(max = 512)
+    private String portfolioUrl;
+
     @Column(name = "CONTACT_NUMBER", length = 20)
     @Size(max = 20)
     private String contactNumber;
@@ -125,6 +127,7 @@ public class User {
         this.age = age != null ? age : 0;
         this.gender = gender != null? gender : "";
         this.profileImageUrl = profileImageUrl != null ? profileImageUrl : "";
+        this.portfolioUrl = portfolioUrl != null ? portfolioUrl : "";
         this.contactNumber = contactNumber != null ? contactNumber : "";
         this.introduction = introduction != null ? introduction : "";
         this.providerType = providerType;
@@ -139,7 +142,6 @@ public class User {
         this.techSpec = userRequestDto.getTechSpec();
         this.contactNumber = userRequestDto.getContactNumber();
         this.introduction = userRequestDto.getIntroduction();
-        this.profileImageUrl = userRequestDto.getProfileImageUrl();
         this.modifiedAt = LocalDateTime.now();
     }
 

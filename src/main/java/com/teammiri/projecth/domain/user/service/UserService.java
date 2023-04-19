@@ -57,7 +57,6 @@ public class UserService {
         if (userEntity == null) {
             throw new IllegalArgumentException("해당 유저가 없습니다. id=" + userId);
         }
-        log.info("update user, userId={}, userQueryDto={}", userId, userQueryDto);
         userEntity.update(userQueryDto);
         log.info("updated user, userId={}, userEntity={}", userId, userEntity);
         return userEntity.getUserId();
