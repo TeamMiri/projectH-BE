@@ -34,9 +34,17 @@ public class UserController {
         return ApiResponse.success("user", user);
     }
 
+    @GetMapping("{userId}")
+    public ApiResponse getUser(@PathVariable final String userId) {
+        User user = userService.getUser(userId);
+
+        return ApiResponse.success("user", user);
+    }
+
     @PatchMapping("me")
-    public String update(@PathVariable final String userId, @RequestBody final UserRequestDto userRequestDto) {
+    public ApiResponse update(@PathVariable final String userId, @RequestBody final UserRequestDto userRequestDto) {
         log.info("update user, userId={}, userRequestDto={}", userId, userRequestDto);
-        return userService.update(userId, userRequestDto);
+        String updatedUserId = userService.update(userId, userRequestDto);
+        return ApiResponse.success("userId", updatedUserId);
     }
 }

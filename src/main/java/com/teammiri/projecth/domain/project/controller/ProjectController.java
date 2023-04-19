@@ -3,6 +3,7 @@ package com.teammiri.projecth.domain.project.controller;
 import com.teammiri.projecth.domain.project.dto.ProjectRequestDto;
 import com.teammiri.projecth.domain.project.dto.ProjectResponseDto;
 import com.teammiri.projecth.domain.project.service.ProjectService;
+import com.teammiri.projecth.domain.userproject.service.UserProjectService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/project")
 public class ProjectController {
     private final ProjectService projectService;
+    private final UserProjectService userProjectService;
 
     /**
      * 프로젝트 생성
@@ -50,5 +52,14 @@ public class ProjectController {
     public Long update(@PathVariable final Long projectId, @RequestBody final ProjectRequestDto projectRequestDto) {
         log.info("updateProject, projectId={}, projectRequestDto={}", projectId, projectRequestDto);
         return projectService.update(projectId, projectRequestDto);
+    }
+
+    /**
+     * 프로젝트 참가
+     */
+    @PostMapping("/{projectId}/join")
+    public void join(@PathVariable final Long projectId, @RequestBody final Long userId) {
+        log.info("joinProject, projectId={}, userId={}", projectId, userId);
+        userProjectService.join(projectId, userId);
     }
 }
