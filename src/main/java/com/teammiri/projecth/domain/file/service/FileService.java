@@ -12,6 +12,7 @@ import com.teammiri.projecth.domain.user.entity.User;
 import com.teammiri.projecth.domain.user.repository.UserRepository;
 import com.teammiri.projecth.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileService {
@@ -117,9 +119,13 @@ public class FileService {
 
     // 로컬에 파일 업로드 하기
     private Optional<File> convert(MultipartFile file) throws IOException {
+        log.info("convert file: " + file.getOriginalFilename());
         File convertFile = new File(System.getProperty("user.dir") + "/" + file.getOriginalFilename());
+        log.info("convertFile: " + convertFile);
         if (convertFile.createNewFile()) { // 바로 위에서 지정한 경로에 File이 생성됨 (경로가 잘못되었다면 생성 불가능)
+            log.info("converFile.createNewFile() = true");
             try (FileOutputStream fos = new FileOutputStream(convertFile)) { // FileOutputStream 데이터를 파일에 바이트 스트림으로 저장하기 위함
+                log.info("fos: " + fos);
                 fos.write(file.getBytes());
             }
             return Optional.of(convertFile);

@@ -6,8 +6,10 @@ import com.teammiri.projecth.domain.user.repository.UserRepository;
 import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import com.teammiri.projecth.domain.userproject.repository.UserProjectRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserProjectService {
@@ -23,7 +25,8 @@ public class UserProjectService {
         projectRepository.findById(projectId).ifPresent(
                 project -> {
                     project.getMemberIdList().add(user.getUserId());
-                    userProjectRepository.save(new UserProject(user, project));
+                    UserProject saved = userProjectRepository.save(new UserProject(user, project));
+                    log.info("saved: {}", saved);
                 });
     }
 }

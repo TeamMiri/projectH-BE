@@ -41,6 +41,9 @@ public class Project {
 
     @Column(name = "user_id", insertable = false, updatable = false)
     private String ownerId;
+//
+//    @Column(name = "user_name", insertable = false, updatable = false)
+//    private String ownerName;
 
     @ElementCollection
     private List<String> memberIdList = new ArrayList<>();
