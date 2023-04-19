@@ -4,6 +4,10 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.teammiri.projecth.domain.project.dto.ProjectResponseDto;
+import com.teammiri.projecth.domain.project.entity.Project;
+import com.teammiri.projecth.domain.project.repository.ProjectRepository;
+import com.teammiri.projecth.domain.project.service.ProjectService;
 import com.teammiri.projecth.domain.user.entity.User;
 import com.teammiri.projecth.domain.user.repository.UserRepository;
 import com.teammiri.projecth.domain.user.service.UserService;
@@ -23,35 +27,36 @@ import java.util.UUID;
 public class FileService {
     private final S3Service s3Service;
     private final UserService userService;
-    private final UserRepository userRepository;
+    private final ProjectRepository projectRepository;
+//    private final UserRepository userRepository;
     private final AmazonS3 s3client;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    public User uploadProfileImage(MultipartFile file, Long userId) throws IOException {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            // 해당 유저가 존재하지 않을 때 처리할 로직
-            return null;
-        }
-
-        String fileName = file.getOriginalFilename();
-        String key = userId + "/" + fileName;
-
-        ObjectMetadata metadata = new ObjectMetadata();
-        metadata.setContentType(file.getContentType());
-        metadata.setContentLength(file.getSize());
-
-        s3client.putObject(
-                new PutObjectRequest(s3client.getBucketLocation(bucket), key, file.getInputStream(), metadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
-
-        String imageUrl = s3client.getUrl("BUCKET_NAME", key).toString();
-        user.setProfileImageUrl(imageUrl);
-
-        return userRepository.save(user);
-    }
+//    public User uploadProfileImage(MultipartFile file, Long userId) throws IOException {
+//        User user = userRepository.findById(userId).orElse(null);
+//        if (user == null) {
+//            // 해당 유저가 존재하지 않을 때 처리할 로직
+//            return null;
+//        }
+//
+//        String fileName = file.getOriginalFilename();
+//        String key = userId + "/" + fileName;
+//
+//        ObjectMetadata metadata = new ObjectMetadata();
+//        metadata.setContentType(file.getContentType());
+//        metadata.setContentLength(file.getSize());
+//
+//        s3client.putObject(
+//                new PutObjectRequest(s3client.getBucketLocation(bucket), key, file.getInputStream(), metadata)
+//                        .withCannedAcl(CannedAccessControlList.PublicRead));
+//
+//        String imageUrl = s3client.getUrl("BUCKET_NAME", key).toString();
+//        user.setProfileImageUrl(imageUrl);
+//
+//        return userRepository.save(user);
+//    }
 
 //    public void uploadPortfolio(MultipartFile file) {
 //        User user = userService.getLoginUser();
@@ -120,5 +125,19 @@ public class FileService {
             return Optional.of(convertFile);
         }
         return Optional.empty();
+    }
+
+    public String uploadProjectProposal(MultipartFile file, Long projectId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("해당 프로젝트가 존재하지 않습니다."));
+        String proposalUrl = uploadFiles(file, "proposal");
+        project.setProposalUrl(proposalUrl);
+        return proposalUrl;
+    }
+
+    public String uploadProjectImage(MultipartFile file, Long projectId) {
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("해당 프로젝트가 존재하지 않습니다."));
+        String imageUrl = uploadFiles(file, "project-image");
+        project.setProjectImageUrl(imageUrl);
+        return imageUrl;
     }
 }

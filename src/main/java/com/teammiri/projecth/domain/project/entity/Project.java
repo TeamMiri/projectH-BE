@@ -8,6 +8,7 @@ import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -60,10 +61,12 @@ public class Project {
     @Convert(converter = StringListConverter.class)
     private List<String> techSpec = new ArrayList<>();
 
+    @Setter
     @Column(name = "PROJECT_IMAGE_URL", length = 512)
     @Size(max = 512)
     private String projectImageUrl;
 
+    @Setter
     @Column(name = "PROPOSAL_URL", length = 512)
     @Size(max = 512)
     private String proposalUrl;
