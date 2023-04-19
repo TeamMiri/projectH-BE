@@ -51,4 +51,13 @@ public class ProjectController {
         log.info("updateProject, projectId={}, projectRequestDto={}", projectId, projectRequestDto);
         return projectService.update(projectId, projectRequestDto);
     }
+
+    /**
+     * 프로젝트 참가
+     */
+    @PostMapping("/{projectId}/join")
+    public Long join(@PathVariable final Long projectId, @RequestBody final Long userId) {
+        log.info("joinProject, projectId={}, userId={}", projectId, userId);
+        return projectService.join(projectId, userId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.teammiri.projecth.domain.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,6 +46,9 @@ public class Project {
     @Column(name = "LOCATION", length = 64)
     @Size(max = 64)
     private String location;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<UserProject> userProjectList = new ArrayList<>();
 
     @Column(name = "STATUS", length = 32)
     @NotNull

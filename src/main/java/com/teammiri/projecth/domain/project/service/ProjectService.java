@@ -52,4 +52,8 @@ public class ProjectService {
                 params.getLocation(), params.getStatus());
         return projectId;
     }
+
+    public Long join(Long projectId, Long userId) {
+        return null;
+    }
 }

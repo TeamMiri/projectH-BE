@@ -1,6 +1,7 @@
 package com.teammiri.projecth.common;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.AttributeConverter;
@@ -17,6 +18,6 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
 
     @Override
     public List<String> convertToEntityAttribute(String string) {
-        return Arrays.asList(string.split(SPLIT_CHAR));
+        return string == null ? Collections.emptyList() : Arrays.asList(string.split(SPLIT_CHAR));
     }
 }

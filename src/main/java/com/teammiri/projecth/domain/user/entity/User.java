@@ -4,6 +4,7 @@ import com.teammiri.projecth.common.StringListConverter;
 import com.teammiri.projecth.domain.project.entity.Project;
 import com.teammiri.projecth.domain.project.entity.ProjectStatus;
 import com.teammiri.projecth.domain.user.dto.UserRequestDto;
+import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import com.teammiri.projecth.oauth.entity.ProviderType;
 import com.teammiri.projecth.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -87,6 +88,9 @@ public class User {
     @Size(max = 1000)
     private String introduction;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserProject> userProjectList = new ArrayList<>();
+
     @Column(name = "PROVIDER_TYPE", length = 20)
     @Enumerated(EnumType.STRING)
     @NotNull
@@ -137,6 +141,10 @@ public class User {
         this.modifiedAt = LocalDateTime.now();
     }
 
+    public void addUserProject(UserProject userProject) {
+        this.userProjectList.add(userProject);
+        userProject.setUser(this);
+    }
 }
 
 
