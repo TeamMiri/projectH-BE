@@ -7,6 +7,7 @@ import com.teammiri.projecth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,14 +39,13 @@ public class UserService {
     /**
      * 유저 정보 업데이트
      */
+    @Transactional
     public String update(String userId, UserRequestDto userQueryDto) {
-//        User userEntity = userRepository.findByUserId(userId);
-//        if (userEntity == null) {
-//            throw new IllegalArgumentException("해당 유저가 없습니다. id=" + userId));
-//        }
-//        userEntity.update(user.getUserId(), user.getPassword(), user.getName(), user.getEmail(), user.getEmailVerifiedYn(),
-//                user.getProfileImageUrl(), user.getProviderType(), user.getRoleType(), user.getCreatedAt(), user.getModifiedAt());
-//        return userEntity.getUserId();
-    return null;
+        User userEntity = userRepository.findByUserId(userId);
+        if (userEntity == null) {
+            throw new IllegalArgumentException("해당 유저가 없습니다. id=" + userId);
+        }
+        userEntity.update(userQueryDto);
+        return userEntity.getUserId();
     }
 }
