@@ -24,9 +24,12 @@ public class UserProjectService {
             throw new IllegalStateException("해당 유저가 없습니다. id=" + userId);
         }
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalStateException("해당 프로젝트가 없습니다. id=" + projectId));
-        project.getMemberIdList().add(user.getUserId());
-        UserProject saved = userProjectRepository.save(UserProject.builder().user(user).project(project).build());
-        log.info("saved: {}", saved);
+
+        UserProject userProject = new UserProject();
+        user.addUserProject(userProject);
+        userProject.joinProject(project);
+        project.getMemberIdList().add(user.getName()+","+user.getUserId());
+        userProjectRepository.save(userProject);
     }
 }
 
