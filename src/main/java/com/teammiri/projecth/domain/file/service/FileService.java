@@ -30,7 +30,7 @@ public class FileService {
     private final S3Service s3Service;
     private final UserService userService;
     private final ProjectRepository projectRepository;
-//    private final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final AmazonS3 s3client;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -82,6 +82,7 @@ public class FileService {
         User user = userService.getLoginUser();
         String portfolioUrl = uploadFiles(file, "portfolio");
         user.setPortfolioUrl(portfolioUrl);
+        userRepository.save(user);
         return portfolioUrl;
     }
 
@@ -137,6 +138,7 @@ public class FileService {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("해당 프로젝트가 존재하지 않습니다."));
         String proposalUrl = uploadFiles(file, "proposal");
         project.setProposalUrl(proposalUrl);
+        projectRepository.save(project);
         return proposalUrl;
     }
 
@@ -144,6 +146,7 @@ public class FileService {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("해당 프로젝트가 존재하지 않습니다."));
         String imageUrl = uploadFiles(file, "project-image");
         project.setProjectImageUrl(imageUrl);
+        projectRepository.save(project);
         return imageUrl;
     }
 }
