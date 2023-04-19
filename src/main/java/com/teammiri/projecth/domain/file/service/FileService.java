@@ -81,11 +81,8 @@ public class FileService {
     public String uploadPortfolio(MultipartFile file) {
         User user = userService.getLoginUser();
         String portfolioUrl = uploadFiles(file, "portfolio");
-        log.info("user: {}", user);
         user.setPortfolioUrl(portfolioUrl);
-        log.info("user: {}", user);
         userRepository.save(user);
-        log.info("user: {}", user);
         return portfolioUrl;
     }
 
