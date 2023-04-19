@@ -6,6 +6,7 @@ import com.teammiri.projecth.domain.user.entity.User;
 import com.teammiri.projecth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,15 @@ public class UserService {
         return userRepository.findByUserId(userId);
     }
 
+    /**
+     * 로그인한 유저 정보 조회
+     * @return
+     */
+    public User getLoginUser() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return getUser(principal.getUsername());
+    }
     /**
      * 유저 정보 업데이트
      */

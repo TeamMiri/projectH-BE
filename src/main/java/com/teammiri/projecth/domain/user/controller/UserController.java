@@ -27,9 +27,7 @@ public class UserController {
 
     @GetMapping("me")
     public ApiResponse getUser() {
-        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        User user = userService.getUser(principal.getUsername());
+        User user = userService.getLoginUser();
 
         return ApiResponse.success("user", user);
     }
@@ -41,10 +39,11 @@ public class UserController {
         return ApiResponse.success("user", user);
     }
 
-    @PatchMapping("me")
-    public ApiResponse update(@PathVariable final String userId, @RequestBody final UserRequestDto userRequestDto) {
-        log.info("update user, userId={}, userRequestDto={}", userId, userRequestDto);
-        String updatedUserId = userService.update(userId, userRequestDto);
+    @PutMapping("me")
+    public ApiResponse update(@RequestBody final UserRequestDto userRequestDto) {
+        User user = userService.getLoginUser();
+        log.info("update user, userId={}, userRequestDto={}", user.getUserId(), userRequestDto);
+        String updatedUserId = userService.update(user.getUserId(), userRequestDto);
         return ApiResponse.success("userId", updatedUserId);
     }
 }

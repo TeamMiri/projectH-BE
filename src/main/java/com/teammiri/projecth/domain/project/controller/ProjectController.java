@@ -48,7 +48,7 @@ public class ProjectController {
     /**
      * 프로젝트 수정
      */
-    @PatchMapping("/{projectId}")
+    @PutMapping("/{projectId}")
     public Long update(@PathVariable final Long projectId, @RequestBody final ProjectRequestDto projectRequestDto) {
         log.info("updateProject, projectId={}, projectRequestDto={}", projectId, projectRequestDto);
         return projectService.update(projectId, projectRequestDto);
