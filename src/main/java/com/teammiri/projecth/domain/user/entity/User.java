@@ -1,6 +1,8 @@
 package com.teammiri.projecth.domain.user.entity;
 
+import com.teammiri.projecth.common.StringListConverter;
 import com.teammiri.projecth.domain.project.entity.Project;
+import com.teammiri.projecth.domain.project.entity.ProjectStatus;
 import com.teammiri.projecth.oauth.entity.ProviderType;
 import com.teammiri.projecth.oauth.entity.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -67,6 +69,9 @@ public class User {
     private String gender;
 
     // techSpec
+    @Column(name = "TECH_SPEC")
+    @Convert(converter = StringListConverter.class)
+    private List<String> techSpec = new ArrayList<>();
 
     @Column(name = "PROFILE_IMAGE_URL", length = 512)
     @NotNull
@@ -120,6 +125,29 @@ public class User {
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
+
+    public void update(@NotNull @Size(max = 64) String userId,
+                       @Size(max = 100) String password,
+                       @NotNull @Size(max = 100) String name,
+                       @NotNull @Size(max = 512) String email,
+                       @NotNull @Size(max = 1) String emailVerifiedYn,
+                       @NotNull @Size(max = 512) String profileImageUrl,
+                       @NotNull ProviderType providerType,
+                       @NotNull RoleType roleType,
+                       @NotNull LocalDateTime createdAt,
+                       @NotNull LocalDateTime modifiedAt) {
+        this.userId = userId;
+        this.name = name;
+        this.password = password;
+        this.email = email != null ? email : "NO_EMAIL";
+        this.emailVerifiedYn = emailVerifiedYn;
+        this.profileImageUrl = profileImageUrl != null ? profileImageUrl : "";
+        this.providerType = providerType;
+        this.roleType = roleType;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+    }
+
 }
 
 
