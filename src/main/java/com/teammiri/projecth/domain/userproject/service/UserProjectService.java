@@ -22,13 +22,9 @@ public class UserProjectService {
         }
         projectRepository.findById(projectId).ifPresent(
                 project -> {
-                    UserProject userProject = new UserProject();
-                    user.addUserProject(userProject);
-                    userProject.joinProject(project);
                     project.getMemberIdList().add(user.getUserId());
-                    userProjectRepository.save(userProject);
+                    userProjectRepository.save(new UserProject(user, project));
                 });
-
     }
 }
 
