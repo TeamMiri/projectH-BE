@@ -24,7 +24,7 @@ public class ProjectRequestDto {
     private ProjectStatus status;
 
     public Project toEntity(User owner) {
-        memberIdList.add(ownerId);
+        memberIdList.add(owner.getName() + "," + ownerId);
         return Project.builder()
                 .title(title)
                 .owner(owner)

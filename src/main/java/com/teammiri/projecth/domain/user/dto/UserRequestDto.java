@@ -11,5 +11,5 @@ public class UserRequestDto {
     private List<String> techSpec;
     private String contactNumber;
     private String introduction;
-    private String profileImageUrl;
+    private String location;
 }

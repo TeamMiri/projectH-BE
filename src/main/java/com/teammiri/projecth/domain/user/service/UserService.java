@@ -5,13 +5,16 @@ import com.teammiri.projecth.domain.user.dto.UserResponseDto;
 import com.teammiri.projecth.domain.user.entity.User;
 import com.teammiri.projecth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -37,6 +40,15 @@ public class UserService {
     }
 
     /**
+     * 로그인한 유저 정보 조회
+     * @return
+     */
+    public User getLoginUser() {
+        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return getUser(principal.getUsername());
+    }
+    /**
      * 유저 정보 업데이트
      */
     @Transactional
@@ -46,6 +58,7 @@ public class UserService {
             throw new IllegalArgumentException("해당 유저가 없습니다. id=" + userId);
         }
         userEntity.update(userQueryDto);
+        log.info("updated user, userId={}, userEntity={}", userId, userEntity);
         return userEntity.getUserId();
     }
 }

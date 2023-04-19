@@ -7,10 +7,16 @@
         <Console name="ConsoleLog" target="SYSTEM_OUT">
             <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
         </Console>
+        <Console name="CONSOLE" target="ch.qos.logback.core.ConsoleAppender">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="UTF-8"/>
+        </Console>
     </Appenders>
     <Loggers>
         <Root level="debug">
             <AppenderRef ref="ConsoleLog" />
+        </Root>
+        <Root level="debug">
+            <AppenderRef ref="CONSOLE" />
         </Root>
     </Loggers>
 </Configuration>
