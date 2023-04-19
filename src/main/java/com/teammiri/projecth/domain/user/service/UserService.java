@@ -5,6 +5,7 @@ import com.teammiri.projecth.domain.user.dto.UserResponseDto;
 import com.teammiri.projecth.domain.user.entity.User;
 import com.teammiri.projecth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -55,7 +57,9 @@ public class UserService {
         if (userEntity == null) {
             throw new IllegalArgumentException("해당 유저가 없습니다. id=" + userId);
         }
+        log.info("update user, userId={}, userQueryDto={}", userId, userQueryDto);
         userEntity.update(userQueryDto);
+        log.info("updated user, userId={}, userEntity={}", userId, userEntity);
         return userEntity.getUserId();
     }
 }
