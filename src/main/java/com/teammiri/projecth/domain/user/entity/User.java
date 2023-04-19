@@ -88,6 +88,10 @@ public class User {
     @Size(max = 1000)
     private String introduction;
 
+    @Column(name = "LOCATION", length = 100)
+    @Size(max = 100)
+    private String location;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserProject> userProjectList = new ArrayList<>();
 
@@ -142,6 +146,7 @@ public class User {
         this.techSpec = userRequestDto.getTechSpec();
         this.contactNumber = userRequestDto.getContactNumber();
         this.introduction = userRequestDto.getIntroduction();
+        this.location = userRequestDto.getLocation();
         this.modifiedAt = LocalDateTime.now();
     }
 
