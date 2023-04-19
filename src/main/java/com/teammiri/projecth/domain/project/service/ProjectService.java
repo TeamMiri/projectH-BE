@@ -4,6 +4,8 @@ import com.teammiri.projecth.domain.project.dto.ProjectRequestDto;
 import com.teammiri.projecth.domain.project.dto.ProjectResponseDto;
 import com.teammiri.projecth.domain.project.entity.Project;
 import com.teammiri.projecth.domain.project.repository.ProjectRepository;
+import com.teammiri.projecth.domain.user.entity.User;
+import com.teammiri.projecth.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,13 +18,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectService {
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     /**
      * 프로젝트 생성
      */
     @Transactional
     public Long create(final ProjectRequestDto params) {
-        return projectRepository.save(params.toEntity()).getProjectId();
+        User owner = userRepository.findByUserId(params.getOwnerId());
+        return projectRepository.save(params.toEntity(owner)).getProjectId();
     }
 
     /**
@@ -48,12 +52,8 @@ public class ProjectService {
     @Transactional
     public Long update(final Long projectId, final ProjectRequestDto params) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new IllegalArgumentException("해당 프로젝트가 없습니다. id=" + projectId));
-        project.update(params.getTitle(), params.getOwnerUserId(), params.getTotalNumber(), params.getIntroduction(),
-                params.getLocation(), params.getStatus());
+        User owner = userRepository.findByUserId(params.getOwnerId());
+        project.update(params, owner);
         return projectId;
-    }
-
-    public Long join(Long projectId, Long userId) {
-        return null;
     }
 }

@@ -1,8 +1,6 @@
 package com.teammiri.projecth.domain.user.entity;
 
 import com.teammiri.projecth.common.StringListConverter;
-import com.teammiri.projecth.domain.project.entity.Project;
-import com.teammiri.projecth.domain.project.entity.ProjectStatus;
 import com.teammiri.projecth.domain.user.dto.UserRequestDto;
 import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import com.teammiri.projecth.oauth.entity.ProviderType;
@@ -124,7 +122,11 @@ public class User {
         this.password = "NO_PASS";
         this.email = email != null ? email : "NO_EMAIL";
         this.emailVerifiedYn = emailVerifiedYn;
+        this.age = age != null ? age : 0;
+        this.gender = gender != null? gender : "";
         this.profileImageUrl = profileImageUrl != null ? profileImageUrl : "";
+        this.contactNumber = contactNumber != null ? contactNumber : "";
+        this.introduction = introduction != null ? introduction : "";
         this.providerType = providerType;
         this.roleType = roleType;
         this.createdAt = createdAt;

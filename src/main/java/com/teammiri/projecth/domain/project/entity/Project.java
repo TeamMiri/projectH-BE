@@ -1,6 +1,9 @@
 package com.teammiri.projecth.domain.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.teammiri.projecth.common.StringListConverter;
+import com.teammiri.projecth.domain.project.dto.ProjectRequestDto;
+import com.teammiri.projecth.domain.user.entity.User;
 import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +12,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -31,9 +33,16 @@ public class Project {
     @Size(max = 64)
     private String title;
 
-    @Column(name = "OWNER_USER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     @NotNull
-    private Long ownerUserId;
+    private User owner;
+
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private String ownerId;
+
+    @ElementCollection
+    private List<String> memberIdList = new ArrayList<>();
 
     @Column(name = "TOTAL_NUMBER")
     private Integer totalNumber;
@@ -46,6 +55,10 @@ public class Project {
     @Column(name = "LOCATION", length = 64)
     @Size(max = 64)
     private String location;
+
+    @Column(name = "TECH_SPEC")
+    @Convert(converter = StringListConverter.class)
+    private List<String> techSpec = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<UserProject> userProjectList = new ArrayList<>();
@@ -66,36 +79,60 @@ public class Project {
     @Builder
     public Project(
             @NotNull @Size(max = 64) String title,
-            @NotNull Long ownerUserId,
+            @NotNull User owner,
+            @NotNull String ownerId,
+            List<String> memberIdList,
             Integer totalNumber,
             @NotNull @Size(max = 512) String introduction,
             @Size(max = 64) String location,
+            List<String> techSpec,
+            List<UserProject> userProjectList,
             @NotNull @Size(max = 32) ProjectStatus status,
             LocalDateTime createdAt,
             LocalDateTime updatedAt) {
         this.title = title;
-        this.ownerUserId = ownerUserId;
+        this.owner = owner;
+        this.ownerId = ownerId;
+        this.memberIdList = memberIdList;
         this.totalNumber = totalNumber;
         this.introduction = introduction;
         this.location = location;
+        this.techSpec = techSpec;
+        this.userProjectList = userProjectList;
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
     public void update(
-            @NotNull @Size(max = 64) String title,
-            @NotNull Long ownerUserId,
-            Integer totalNumber,
-            @NotNull @Size(max = 512) String introduction,
-            @Size(max = 64) String location,
-            @NotNull @Size(max = 32) ProjectStatus status) {
-        this.title = title;
-        this.ownerUserId = ownerUserId;
-        this.totalNumber = totalNumber;
-        this.introduction = introduction;
-        this.location = location;
-        this.status = status;
+            ProjectRequestDto params, User owner) {
+        if (params.getTitle() != null) {
+            this.title = params.getTitle();
+        }
+        if (params.getOwnerId() != null) {
+            this.ownerId = params.getOwnerId();
+        }
+        if (owner != null) {
+            this.owner = owner;
+        }
+        if (params.getMemberIdList() != null) {
+            this.memberIdList = params.getMemberIdList();
+        }
+        if (params.getTotalNumber() != null) {
+            this.totalNumber = params.getTotalNumber();
+        }
+        if (params.getIntroduction() != null) {
+            this.introduction = params.getIntroduction();
+        }
+        if (params.getLocation() != null) {
+            this.location = params.getLocation();
+        }
+        if (params.getTechSpec() != null) {
+            this.techSpec = params.getTechSpec();
+        }
+        if (params.getStatus() != null) {
+            this.status = params.getStatus();
+        }
         this.updatedAt = LocalDateTime.now();
     }
 }

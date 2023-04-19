@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class ProjectResponseDto {
     private Long projectId;
     private String title;
-    private Long ownerUserId;
+    private String ownerUserId;
     private Integer totalNumber;
     private String introduction;
     private String location;
@@ -21,7 +21,7 @@ public class ProjectResponseDto {
     public ProjectResponseDto(Project project) {
         this.projectId = project.getProjectId();
         this.title = project.getTitle();
-        this.ownerUserId = project.getOwnerUserId();
+        this.ownerUserId = project.getOwner().getUserId();
         this.totalNumber = project.getTotalNumber();
         this.introduction = project.getIntroduction();
         this.location = project.getLocation();
