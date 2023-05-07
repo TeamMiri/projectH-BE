@@ -1,11 +1,11 @@
 package com.teammiri.projecth.domain.user.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import com.teammiri.projecth.common.StringListConverter;
 import com.teammiri.projecth.domain.user.dto.UserRequestDto;
 import com.teammiri.projecth.domain.userproject.entity.UserProject;
 import com.teammiri.projecth.oauth.entity.ProviderType;
 import com.teammiri.projecth.oauth.entity.RoleType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +14,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "USER_")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -92,7 +92,9 @@ public class User {
     @Size(max = 100)
     private String location;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("user")
+    @JsonManagedReference
     private List<UserProject> userProjectList = new ArrayList<>();
 
     @Column(name = "PROVIDER_TYPE", length = 20)

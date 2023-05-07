@@ -1,16 +1,15 @@
 package com.teammiri.projecth.domain.userproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.teammiri.projecth.domain.project.entity.Project;
 import com.teammiri.projecth.domain.user.entity.User;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @Entity
 @NoArgsConstructor
 public class UserProject {
@@ -19,11 +18,14 @@ public class UserProject {
     @Column(name = "user_project_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @Setter
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "user_seq")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "project_id")
     private Project project;
 

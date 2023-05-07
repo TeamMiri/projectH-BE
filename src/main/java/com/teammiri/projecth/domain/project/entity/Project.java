@@ -1,6 +1,6 @@
 package com.teammiri.projecth.domain.project.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import com.teammiri.projecth.common.StringListConverter;
 import com.teammiri.projecth.domain.project.dto.ProjectRequestDto;
 import com.teammiri.projecth.domain.user.entity.User;
@@ -25,6 +25,7 @@ import java.util.List;
 public class Project {
     @JsonIgnore
     @Id
+    @Setter
     @Column(name = "PROJECT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long projectId;
@@ -74,7 +75,9 @@ public class Project {
     @Size(max = 512)
     private String proposalUrl;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("project")
+    @JsonManagedReference
     private List<UserProject> userProjectList = new ArrayList<>();
 
     @Column(name = "STATUS", length = 32)
